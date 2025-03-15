@@ -10,6 +10,8 @@ export const axesHelper = new THREE.AxesHelper(30);
 export class SceneManager {
     constructor() {
         this.scene = new THREE.Scene();
+
+        this.data = '123'
         
         this.camera = new THREE.PerspectiveCamera(40, window.innerWidth / window.innerHeight, 0.1, 1000);
         this.camera.position.set(0, 20, 60);
@@ -49,6 +51,7 @@ export class SceneManager {
     add(obj){
         this.scene.add(obj)
     }
+
    
 
     animate(){

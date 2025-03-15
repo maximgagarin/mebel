@@ -1,7 +1,8 @@
+import * as THREE from 'three'
 import KitchenConfig from "./KitchenConfig"
 
 export class UiControls{
-    constructor(room, builder, scene){
+    constructor(room, builder, scene, floor){
         this.widthDomElement = document.getElementById('width')
         this.depthDomElement = document.getElementById('depth')
         this.heightDomElement = document.getElementById('height')
@@ -23,6 +24,7 @@ export class UiControls{
         this.room = room
         this.builder = builder
         this.scene = scene
+        this.floor = floor
 
     }
 
@@ -53,7 +55,7 @@ export class UiControls{
                this.kitchenDirectBlocks.style.display = 'block';
                this.kitchenAngleBlocks.style.display = 'none'
 
-                console.log(this.scene)
+             
             }
         });
         
@@ -76,7 +78,7 @@ export class UiControls{
                 //         this.scene.remove(element)
                 //     }
                 // });
-                console.log(this.scene)
+          
             }
         });
 
@@ -86,7 +88,82 @@ export class UiControls{
         //         console.log('123')
         //     }
         // });
+
+
+
+
+
+
+
     }
+
+
+    raycaster(cabinets, floor){
+        const raycaster = new THREE.Raycaster();
+        const mouse = new THREE.Vector2();
+
+        let selectedEl
+        
+
+
+        window.addEventListener('mousedown' , (event) =>{
+            mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
+            mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
+
+           raycaster.setFromCamera(mouse, this.scene.camera);
+           const intersects = raycaster.intersectObjects(cabinets);
+          
+           if (intersects.length>0){
+                let intersected = intersects[0]
+                selectedEl = intersected.object.parent
+                console.log(selectedEl)
+           
+           }
+        })
+        
+
+        window.addEventListener('mousemove', (event)=>{
+            if(selectedEl){
+                this.scene.controls.enabled = false
+                mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
+                mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
+
+           
+           
+                raycaster.setFromCamera(mouse, this.scene.camera);
+              
+                const intersectsFloor = raycaster.intersectObject(floor)
+             
+                if (intersectsFloor.length>0){
+                    this.scene.controls.enabled = false
+                        let intersected = intersectsFloor[0]
+                        let posX =intersected.point.x
+                        let posZ =intersected.point.z
+
+                        selectedEl.position.x = posX
+                        selectedEl.userData.x = posX
+
+                        selectedEl.position.z = posZ
+                        selectedEl.userData.z = posZ
+                        
+                }
+            }
+        })
+
+        window.addEventListener('mouseup' , (event) =>{
+           if(selectedEl){
+                selectedEl.position.x = selectedEl.userData.x
+                selectedEl.position.z = selectedEl.userData.z
+
+                selectedEl = null
+                this.scene.controls.enabled = true
+           }
+        })
+    }
+
+
+
+
 
     updateRoom(width, height, depth) {
         if (!isNaN(width) && !isNaN(height) && !isNaN(depth)) {
