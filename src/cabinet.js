@@ -5,11 +5,9 @@ import { boxMaterial } from './materials'
 export class Cabinet extends THREE.Group{
     constructor(scene){
         super()
-      
-        
-
         this.scene = scene
         this.addbox()
+        
     }
 
 
@@ -33,9 +31,6 @@ export class Cabinet extends THREE.Group{
 
 
 
-
-    
-
         panelback.position.set(0,5,0)
         panelleft.position.set(-2.5, 5, 2.5)
         panelright.position.set(2.5, 5, 2.5)
@@ -43,18 +38,32 @@ export class Cabinet extends THREE.Group{
         panelbottom.position.set(0, 0, 2.5)
 
      
-
-
         door.position.set(0, 5, 5)
 
-
-
-
         this.add(panelback, panelleft, panelright, door , paneltop, panelbottom)
+        this.name = 'Cabinet'
         this.scene.add(this)
 
-        console.log(this)
-    
+        
+
+
+    }
+
+    checkCollision(otherCabinet) {
+        const box1 = this.getBoundingBox();
+        const box2 = otherCabinet.getBoundingBox();
+        return box1.intersectsBox(box2); // true если столкновение
+    }
+
+    getBoundingBox() {
+        const box = new THREE.Box3().setFromObject(this);
+        return box;
+    }
+
+    center(){
+        let centerX = this.position.x
+        let centerZ = (this.position.z)-2.5
+        return centerZ
     }
 
     setPosition(x,y,z){

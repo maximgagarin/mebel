@@ -13,13 +13,8 @@ export class UiControls{
 
         this.bottomblocks = document.getElementById('bottomblocks') // радио только нижние базы
 
-
         this.kitchenDirectBlocks = document.querySelector('.kitchenDirectBlocks')
         this.kitchenAngleBlocks = document.querySelector('.kitchenAngleBlocks')
-
-
-       
-
 
         this.room = room
         this.builder = builder
@@ -27,7 +22,6 @@ export class UiControls{
         this.floor = floor
 
     }
-
 
     start() {
         this.widthDomElement.addEventListener('input', () => {
@@ -46,7 +40,6 @@ export class UiControls{
         });
 
 
-
         directKitchen.addEventListener('change', () => {
             if (directKitchen.checked) {
                this.builder.addLevel1()
@@ -54,8 +47,6 @@ export class UiControls{
                this.builder.addLevel2()
                this.kitchenDirectBlocks.style.display = 'block';
                this.kitchenAngleBlocks.style.display = 'none'
-
-             
             }
         });
         
@@ -65,7 +56,6 @@ export class UiControls{
                 this.builder.addLeftLevel2()
                 this.kitchenDirectBlocks.style.display = 'none'
                 this.kitchenAngleBlocks.style.display = 'block'
-
             }
         });
         
@@ -77,8 +67,7 @@ export class UiControls{
                 //     if(element.name==='Level2'){
                 //         this.scene.remove(element)
                 //     }
-                // });
-          
+                // });      
             }
         });
 
@@ -88,67 +77,86 @@ export class UiControls{
         //         console.log('123')
         //     }
         // });
-
-
-
-
-
-
-
     }
 
+   
+
+ 
 
     raycaster(cabinets, floor){
         const raycaster = new THREE.Raycaster();
         const mouse = new THREE.Vector2();
 
         let selectedEl
+
+        let offset = new THREE.Vector3();
+
+        let originalPos 
         
-
-
         window.addEventListener('mousedown' , (event) =>{
+           
             mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
             mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
 
            raycaster.setFromCamera(mouse, this.scene.camera);
            const intersects = raycaster.intersectObjects(cabinets);
+           const intersectsFloor = raycaster.intersectObject(floor);
+
           
            if (intersects.length>0){
+            this.scene.controls.enabled = false
                 let intersected = intersects[0]
-                selectedEl = intersected.object.parent
-                console.log(selectedEl)
-           
+                selectedEl = intersected.object.parent   
+                let intersectedFloor = intersectsFloor[0]
+               
+                let floorPoint = intersectedFloor.point
+                let cabinetPoint = selectedEl.position
+
+                offset.subVectors(cabinetPoint, floorPoint)
            }
+           
         })
         
 
-        window.addEventListener('mousemove', (event)=>{
-            if(selectedEl){
-                this.scene.controls.enabled = false
+        window.addEventListener('mousemove', (event) => {
+            if (selectedEl) {
                 mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
                 mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
-
-           
-           
+        
                 raycaster.setFromCamera(mouse, this.scene.camera);
-              
-                const intersectsFloor = raycaster.intersectObject(floor)
-             
-                if (intersectsFloor.length>0){
-                    this.scene.controls.enabled = false
-                        let intersected = intersectsFloor[0]
-                        let posX =intersected.point.x
-                        let posZ =intersected.point.z
-
-                        selectedEl.position.x = posX
-                        selectedEl.userData.x = posX
-
-                        selectedEl.position.z = posZ
-                        selectedEl.userData.z = posZ
-                        
+                const intersectsFloor = raycaster.intersectObject(floor);
+        
+                if (intersectsFloor.length > 0) {
+                    this.scene.controls.enabled = false;
+        
+                    let newPosition = intersectsFloor[0].point.clone();
+                    newPosition.add(offset);
+        
+                    let originalPos = selectedEl.position.clone(); // Делаем копию позиции
+                    
+        
+                    let collision = false;
+                    this.scene.scene.children.forEach(element => {
+                        if (element.name === 'Cabinet' && element !== selectedEl) {
+                            selectedEl.position.set(newPosition.x, 0, newPosition.z);
+        
+                            if (selectedEl.checkCollision(element)) {
+                                collision = true;
+                            }
+                        }
+                    });
+        
+                    if (collision) {
+                        selectedEl.position.copy(originalPos); // Возвращаем старую позицию, если есть коллизия
+                    } else {
+                        originalPos.copy(newPosition); // Если перемещение допустимо, обновляем originalPos
+                    }
+        
+                    selectedEl.userData.x = selectedEl.position.x;
+                    selectedEl.userData.z = selectedEl.position.z;
                 }
             }
-        })
+        });
 
         window.addEventListener('mouseup' , (event) =>{
            if(selectedEl){

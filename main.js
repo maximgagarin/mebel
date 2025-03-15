@@ -36,7 +36,7 @@ let cabinets = []
 
 const cabinet1 = new Cabinet(Studio.scene)
 const cabinet2 = new Cabinet(Studio.scene)
- cabinet2.setPosition(-5,0,15)
+ cabinet2.setPosition(0,0,15)
 
 cabinets.push(cabinet1,cabinet2)
 console.log(cabinets)

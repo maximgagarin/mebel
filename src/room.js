@@ -14,6 +14,7 @@ export class Room{
         this.height = h
         this.objects = []; // Массив для хранения объектов комнаты
         this.createRoom()
+        //this.addLines()
 
 
 
@@ -50,6 +51,34 @@ export class Room{
         this.scene.add(this.wallRight)
 
         this.objects.push(this.floor, this.wall, this.wallLeft, this.wallRight);
+
+
+        
+    }
+
+    addLines(){
+        const numLines = 30; // Количество линий
+        const spacing = 1;   // Промежуток между линиями
+        const lineLength = 30; // Длина каждой линии
+        
+        // Создаем материал для линий
+        const material = new THREE.LineBasicMaterial({ color: 0x00ff00 });
+        
+        // Цикл для создания линий
+        for (let i = 0; i < numLines; i++) {
+            // Создаем геометрию для линии
+            const points = [];
+            points.push(new THREE.Vector3(-lineLength / 2, 0,  i * spacing)); // Начальная точка
+            points.push(new THREE.Vector3(lineLength / 2, 0 ,  i * spacing));  // Конечная точка
+        
+            const geometry = new THREE.BufferGeometry().setFromPoints(points);
+        
+            // Создаем линию
+            const line = new THREE.Line(geometry, material);
+        
+            // Добавляем линию на сцену
+            this.scene.add(line);
+        }
     }
 
     updateSizes(w,h,d){
