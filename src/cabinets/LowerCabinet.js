@@ -3,22 +3,24 @@ import * as THREE from 'three'
 import { boxMaterial } from '../materials'
 
 export class LowerCabinet extends THREE.Group{
-    constructor(x,y,z,scene){
+    constructor(x,y,z){
         super()
-        this.scene = scene
-        this.addbox()
         this.x = x
         this.y = y
-        this.z = z
+        this.z=z
+        
+        this.addbox()
+     
+     
     }
 
 
     addbox(){
-        const doorGeometry = new THREE.BoxGeometry(0.4, 0.7, 0.016)
-        const backGeometry = new THREE.BoxGeometry(0.4, 0.7, 0.008)
-        const topGeometry = new THREE.BoxGeometry((0.4)-0.032, 0.3, 0.016)
-        const sideGeometry = new THREE.BoxGeometry(0.3, 0.7, 0.016)
-        const baseGeometry = new THREE.BoxGeometry(0.4, 0.1, 0.016)
+        const doorGeometry = new THREE.BoxGeometry(this.x, this.y, 0.016)
+        const backGeometry = new THREE.BoxGeometry(this.x, this.y, 0.008)
+        const topGeometry = new THREE.BoxGeometry((this.x)-0.032, this.z, 0.016)
+        const sideGeometry = new THREE.BoxGeometry(this.z, this.y, 0.016)
+        const baseGeometry = new THREE.BoxGeometry(this.x, 0.1, 0.016)
 
 
 
@@ -50,20 +52,22 @@ export class LowerCabinet extends THREE.Group{
 
 
         panelback.position.set(0,0,-0.004)
-        panelleft.position.set((-0.2)+0.0081, 0, 0.15)
-        panelright.position.set((0.2)-0.0081, 0, 0.15)
+        panelleft.position.set((-(this.x)/2)+0.0081, 0, (this.z)/2)
+        panelright.position.set(((this.x)/2)-0.0081, 0, (this.z)/2)
         //paneltop.position.set(0, (0.35)-0.008, 0.15)
-        panelbottom.position.set(0, (-0.35)+0.008, 0.15)
-        basepanel.position.set(0, -0.4, 0.29)
+        panelbottom.position.set(0, (-(this.y)/2)+0.008, (this.z)/2)
+        basepanel.position.set(0,-((this.y)/2)-0.05, (this.z)-0.01)
 
 
      
-        door.position.set(0, 0, 0.31)
+        door.position.set(0, 0, (this.z) +0.01)
 
         this.add(door, panelback, panelleft, panelright,  basepanel ,  panelbottom)
-        this.name = 'Cabinet'
-        //return this
-        this.scene.add(this)
+       
+        return this
+
+       // this.scene.add(this)
+       
     }
 
     setPosition(x,y,z){

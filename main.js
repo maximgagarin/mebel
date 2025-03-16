@@ -8,6 +8,7 @@ import { CabinetBuilder } from './src/CabinetBuilder.js'
 import { Room } from './src/room.js'
 import { UiControls } from './src/ui.js'
 import { LowerCabinet } from './src/cabinets/LowerCabinet.js'
+import { TableTop } from './src/cabinets/TableTop.js'
 
 
 import { boxMaterial, tableTopMaterial } from './src/materials.js'
@@ -20,7 +21,7 @@ light.addToScene(Studio.scene)
 
 const room = new Room(3, 2.5, 3, Studio.scene)
 
-room.updateSizes(4,2.5,3)
+room.updateSizes(3,2.5,3)
 
 const builder = new CabinetBuilder(Studio.scene)
 
@@ -32,11 +33,6 @@ uiControls.start()
 
 
 
-// let cabinets = []
- const cabinet1 = new LowerCabinet(Studio.scene)
- cabinet1.addbox()
- cabinet1.position.set(0,0.45,0)
-// cabinet1.setPosition(0,1,1)
 
 // cabinets.push(cabinet1)
 

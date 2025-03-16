@@ -2,6 +2,8 @@ import * as THREE from 'three'
 import { boxMaterial ,tableTopMaterial } from './materials';
 import KitchenConfig from './KitchenConfig';
 import { UpperCabinet } from './cabinets/UpperCabinet';
+import { LowerCabinet } from './cabinets/LowerCabinet';
+import { TableTop } from './cabinets/TableTop';
 
 export class CabinetBuilder{
 
@@ -108,20 +110,17 @@ export class CabinetBuilder{
     
      addLevel1(){
   
-        // let xPos = -12
-        // for (let i = 0; i < 5; i++) {
+        let xPos = -1.2
+        for (let i = 0; i < 5; i++) {
       
-        //     const geometry = new THREE.BoxGeometry(5.95, 8, 5);
-        //     const cube2 = new THREE.Mesh(geometry, boxMaterial);
-        //     cube2.name = 'Level1'
+            const cube = new LowerCabinet(0.6, 0.7, 0.5)
     
-        //     cube2.receiveShadow = true
-        //     cube2.castShadow = true
+          
     
-        //     cube2.position.set(xPos, 4, 2.5)
-        //     this.scene.add(cube2)
-        //     xPos += 6
-        // }
+            cube.position.set(xPos, 0.45, 0.01)
+            this.scene.add(cube)
+            xPos += 0.605
+        }
     }
     
      addLevel3(){

@@ -43,8 +43,8 @@ export class UiControls{
         directKitchen.addEventListener('change', () => {
             if (directKitchen.checked) {
                this.builder.addLevel1()
-               this.builder.addTabletop(30, 0.3, 5.3, 0, 8.15, 2.65, 0)
-               this.builder.addLevel2()
+            //   this.builder.addTabletop(30, 0.3, 5.3, 0, 8.15, 2.65, 0)
+          //     this.builder.addLevel2()
                this.kitchenDirectBlocks.style.display = 'block';
                this.kitchenAngleBlocks.style.display = 'none'
             }
