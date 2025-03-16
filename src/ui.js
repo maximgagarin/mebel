@@ -83,7 +83,7 @@ export class UiControls{
 
  
 
-    raycaster(cabinets, floor){
+    raycaster(cabinets, floor, wall){
         const raycaster = new THREE.Raycaster();
         const mouse = new THREE.Vector2();
 
@@ -125,6 +125,15 @@ export class UiControls{
         
                 raycaster.setFromCamera(mouse, this.scene.camera);
                 const intersectsFloor = raycaster.intersectObject(floor);
+                const intersectsWall = raycaster.intersectObject(wall);
+
+
+                if(intersectsWall.length > 0){
+                    this.scene.controls.enabled = false;
+                    let newPosition = intersectsWall[0].point.clone();
+                    selectedEl.position.set(newPosition.x, newPosition.y, 0);
+                }
+
         
                 if (intersectsFloor.length > 0) {
                     this.scene.controls.enabled = false;

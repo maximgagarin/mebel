@@ -1,42 +1,36 @@
 import * as THREE from 'three'
 import { boxMaterial ,tableTopMaterial } from './materials';
 import KitchenConfig from './KitchenConfig';
+import { UpperCabinet } from './cabinets/UpperCabinet';
 
 export class CabinetBuilder{
 
     constructor(scene){
         this.scene = scene
         this.objects = [];
-    //     this.addLevel1()
-    //     this.addLevel2()
-    //  //   this.addLevel3()
-    //     this.addTabletop(30, 0.3, 5.3, 0, 8.15, 2.65, 0)
-
-
-    //     this.addLeftLevel1()
-    //     this.addLeftLevel2()
-
-    //     this.addRightLevel1()
-    //     this.addRightLevel2()
+    
     }
 
 
     addLeftLevel1(){
         let zPos = 8
-        for (let i = 0; i < 3; i++) {
+
+        
       
-            const geometry = new THREE.BoxGeometry(5.95, 8, 5);
-            const cube6 = new THREE.Mesh(geometry, boxMaterial);
+
+        // for (let i = 0; i < 3; i++) {
+      
+        //     const cube6 = new Cabinet()
     
-            cube6.receiveShadow = true
-            cube6.castShadow = true
+        //     cube6.receiveShadow = true
+        //     cube6.castShadow = true
     
-            cube6.position.set(-12.5, 4, zPos)
-            cube6.rotation.y = Math.PI/2
-            this.scene.add(cube6)
-            zPos += 6
-            this.addTabletop(17.85, 0.3, 5.3, -12.4, 8.15, 14, Math.PI/2)
-        }
+        //     cube6.position.set(-12.5, 4, zPos)
+        //     cube6.rotation.y = Math.PI/2
+        //     this.scene.add(cube6)
+        //     zPos += 6
+        //     this.addTabletop(17.85, 0.3, 5.3, -12.4, 8.15, 14, Math.PI/2)
+        // }
     }
 
     addLeftLevel2(){
@@ -95,20 +89,17 @@ export class CabinetBuilder{
 
 
      addLevel2(){
-        let xPos = -12
+        let xPos = -1.2
         for (let i = 0; i < 5; i++) {
       
-            const geometry = new THREE.BoxGeometry(5.95, 6, 2);
-            const cube1 = new THREE.Mesh(geometry, boxMaterial);
-            cube1.name = 'Level2'
+            const cube = new UpperCabinet()
+            
     
-            cube1.receiveShadow = true
-            cube1.castShadow = true
+            
     
-            cube1.position.set(xPos, 17, 1)
-            cube1.rotation.y = Math.PI
-            this.scene.add(cube1)
-            xPos += 6
+            cube.setPosition(xPos, 0.4, 0.25)
+            this.scene.add(cube)
+            xPos += 0.6
         }
     }
 
@@ -116,20 +107,21 @@ export class CabinetBuilder{
     
     
      addLevel1(){
-        let xPos = -12
-        for (let i = 0; i < 5; i++) {
+  
+        // let xPos = -12
+        // for (let i = 0; i < 5; i++) {
       
-            const geometry = new THREE.BoxGeometry(5.95, 8, 5);
-            const cube2 = new THREE.Mesh(geometry, boxMaterial);
-            cube2.name = 'Level1'
+        //     const geometry = new THREE.BoxGeometry(5.95, 8, 5);
+        //     const cube2 = new THREE.Mesh(geometry, boxMaterial);
+        //     cube2.name = 'Level1'
     
-            cube2.receiveShadow = true
-            cube2.castShadow = true
+        //     cube2.receiveShadow = true
+        //     cube2.castShadow = true
     
-            cube2.position.set(xPos, 4, 2.5)
-            this.scene.add(cube2)
-            xPos += 6
-        }
+        //     cube2.position.set(xPos, 4, 2.5)
+        //     this.scene.add(cube2)
+        //     xPos += 6
+        // }
     }
     
      addLevel3(){

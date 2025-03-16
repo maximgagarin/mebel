@@ -47,8 +47,8 @@ export class Room{
 
         this.scene.add(this.floor)
         this.scene.add(this.wall)
-        this.scene.add(this.wallLeft)
-        this.scene.add(this.wallRight)
+     //   this.scene.add(this.wallLeft)
+      //  this.scene.add(this.wallRight)
 
         this.objects.push(this.floor, this.wall, this.wallLeft, this.wallRight);
 

@@ -14,10 +14,10 @@ export class SceneManager {
         this.data = '123'
         
         this.camera = new THREE.PerspectiveCamera(40, window.innerWidth / window.innerHeight, 0.1, 1000);
-        this.camera.position.set(0, 20, 60);
+        this.camera.position.set(1, 3 , 3);
         
         
-        this.targetPosition = new THREE.Vector3(1, 5, 1);
+        this.targetPosition = new THREE.Vector3(0, 0, 0);
         this.camera.lookAt(this.targetPosition);
 
         this.renderer = new THREE.WebGLRenderer({ antialias: true });
