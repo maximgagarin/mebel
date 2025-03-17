@@ -7,23 +7,49 @@ export class UiControls{
         this.depthDomElement = document.getElementById('depth')
         this.heightDomElement = document.getElementById('height')
 
+        // ВЫБОР КУХНИ
         this.directKitchen = document.getElementById('directKitchen')
         this.angleKitchen = document.getElementById('angleKitchen')
         this.doubleKitchen = document.getElementById('doubleKitchen')
 
-        this.bottomblocks = document.getElementById('bottomblocks') // радио только нижние базы
+        //базы для прямой кухни
+        this.bottomblocks = document.getElementById('bottomblocks') // радио только нижние базы прямая кухня
+        this.allblocks = document.getElementById('allblocks') // радио только верхние нижние базы прямая кухня
+
+        this.caseCabinetL = document.getElementById('caseCabinetL') // радио пенал
+        this.caseCabinetR = document.getElementById('caseCabinetR') // радио пенал
+
+        //базы для угловая кухня
+        this.angleBottom = document.getElementById('angleBottom') // только нижние
+        this.angleRight = document.getElementById('angleRight') // право
+        this.angleLeft = document.getElementById('angleLeft') // лево
+        this.angleAll = document.getElementById('angleAll') // все
+
+        //базы для п образной кухни
+        this.doubleBottom = document.getElementById('doubleBottom') // только нижние
+        this.doubleDirect = document.getElementById('doubleDirect') // низ + прямо
+        this.doubleDirectLeft = document.getElementById('doubleDirectLeft') // низ прямо лево
+        this.doubleDirectRight = document.getElementById('doubleDirectRight') // низ прямо право
+        this.doubleDirectRightLeft = document.getElementById('doubleDirectRightLeft') // низ прямо лево право
+        this.doubleRightLeft = document.getElementById('doubleRightLeft') // низ прямо право
+        this.doubleAll = document.getElementById('doubleAll') // низ прямо право
+      
+
+
 
         this.kitchenDirectBlocks = document.querySelector('.kitchenDirectBlocks')
         this.kitchenAngleBlocks = document.querySelector('.kitchenAngleBlocks')
+        this.kitchenDoubleBlocks = document.querySelector('.kitchenDoubleBlocks')
+
 
         this.room = room
         this.builder = builder
         this.scene = scene
         this.floor = floor
-
     }
 
     start() {
+        //размеры комнаты
         this.widthDomElement.addEventListener('input', () => {
             let width = parseFloat(this.widthDomElement.value);
             this.updateRoom(width, this.room.height, this.room.depth);
@@ -40,43 +66,305 @@ export class UiControls{
         });
 
 
+        //радио добавить прямая кухня
         directKitchen.addEventListener('change', () => {
             if (directKitchen.checked) {
-               this.builder.addLevel1()
-            //   this.builder.addTabletop(30, 0.3, 5.3, 0, 8.15, 2.65, 0)
-          //     this.builder.addLevel2()
+                ['AngleLowerLeft', 'AngleUpperLeft', 'DirectUpper', 'DirectLower'].forEach(name => {
+                    this.scene.scene.children
+                        .filter(element => element.name === name)
+                        .forEach(element => this.scene.scene.remove(element));
+                });
+         
+                    this.builder.addLevel1();
+                    this.builder.addLevel2();
+    
+               KitchenConfig.direct.is = true
+               KitchenConfig.direct.one = true
+               KitchenConfig.direct.two = true
+
                this.kitchenDirectBlocks.style.display = 'block';
                this.kitchenAngleBlocks.style.display = 'none'
+                       this.kitchenDoubleBlocks.style.display = 'none'
             }
+
+            console.log(KitchenConfig)
+            console.log(this.scene.scene.children)
+            
         });
         
+
+        //радио добавить угловая кухня
         angleKitchen.addEventListener('change', () => {
+            ['AngleLowerLeft', 'AngleUpperLeft', 'DirectUpper', 'DirectLower'].forEach(name => {
+                this.scene.scene.children
+                    .filter(element => element.name === name)
+                    .forEach(element => this.scene.scene.remove(element));
+            });
+
+
             if (angleKitchen.checked) {
+                this.builder.addLevel1()
+                this.builder.addLevel2()
+                
                 this.builder.addLeftLevel1()
                 this.builder.addLeftLevel2()
+                
                 this.kitchenDirectBlocks.style.display = 'none'
                 this.kitchenAngleBlocks.style.display = 'block'
-            }
-        });
-        
-        doubleKitchen.addEventListener('change', () => {
-            if (doubleKitchen.checked) {
-                this.builder.addRightLevel1()
-                this.builder.addRightLevel2()
-                // this.scene.children.forEach(element => {
-                //     if(element.name==='Level2'){
-                //         this.scene.remove(element)
-                //     }
-                // });      
+                   this.kitchenDoubleBlocks.style.display = 'none'
+
+                KitchenConfig.angle.is = true
+                KitchenConfig.angle.side1.one = true
+                KitchenConfig.angle.side1.two = true
+
+                console.log(this.scene.scene.children)
             }
         });
 
-        // bottomblocks.addEventListener('change', () => {
-        //     if (bottomblocks.checked) {
-            
-        //         console.log('123')
-        //     }
-        // });
+         //радио добавить п образная кухня
+         doubleKitchen.addEventListener('change', () => {
+            ['AngleLowerLeft', 'AngleUpperLeft', 'DirectUpper', 'DirectLower'].forEach(name => {
+                this.scene.scene.children
+                    .filter(element => element.name === name)
+                    .forEach(element => this.scene.scene.remove(element));
+            });
+
+
+            if (doubleKitchen.checked) {
+                this.builder.addLevel1()
+                this.builder.addLevel2()
+                
+                this.builder.addLeftLevel1()
+                this.builder.addLeftLevel2()
+
+                this.builder.addRightLevel1()
+                this.builder.addRightLevel2()
+
+                this.kitchenDirectBlocks.style.display = 'none'
+                this.kitchenAngleBlocks.style.display = 'none'
+                this.kitchenDoubleBlocks.style.display = 'block'
+
+            }
+        });
+        
+  
+        //оставить только нижние прямая кухня
+        bottomblocks.addEventListener('change', () => {
+            ['AngleLowerLeft', 'AngleUpperLeft', 'DirectUpper', 'DirectLower'].forEach(name => {
+                this.scene.scene.children
+                    .filter(element => element.name === name)
+                    .forEach(element => this.scene.scene.remove(element));
+            });
+            if (bottomblocks.checked) {
+                this.builder.addLevel1()
+            }
+        });
+
+        //оставить все базы прямая кухня
+       this.allblocks.addEventListener('change', () => {
+            if (allblocks.checked) {
+                const objectsToRemove = this.scene.scene.children.filter(element => element.name === 'DirectLower');
+
+                objectsToRemove.forEach(element => {
+                    this.scene.scene.remove(element);
+                });
+               this.builder.addLevel1()
+            //   this.builder.addTabletop(30, 0.3, 5.3, 0, 8.15, 2.65, 0)
+               this.builder.addLevel2()
+           //    this.kitchenDirectBlocks.style.display = 'block';
+            //   this.kitchenAngleBlocks.style.display = 'none'
+            }
+            console.log(this.scene.scene.children)
+        });
+
+        //оставить только нижние угловая 
+        this.angleBottom.addEventListener('change', () => {
+            if (angleBottom.checked) {
+
+                ['AngleLowerLeft', 'AngleUpperLeft', 'DirectUpper', 'DirectLower'].forEach(name => {
+                    this.scene.scene.children
+                        .filter(element => element.name === name)
+                        .forEach(element => this.scene.scene.remove(element));
+                });
+
+                this.builder.addLevel1()
+                
+                
+                this.builder.addLeftLevel1()
+                
+
+              
+           //    this.kitchenDirectBlocks.style.display = 'block';
+            //   this.kitchenAngleBlocks.style.display = 'none'
+            }
+            console.log(this.scene.scene.children)
+        });
+
+
+        //правый пенал
+        this.caseCabinetR.addEventListener('change', () => {
+            if (caseCabinetR.checked) {
+               
+                const objectsToRemove = this.scene.scene.children.filter(element => element.userData.index === 4);
+
+                objectsToRemove.forEach(element => {
+                    this.scene.scene.remove(element);
+                });
+
+                this.builder.addCaseCabinet()
+       
+            }
+            console.log(this.scene.scene.children)
+        });
+
+
+        //левый пенал
+        this.caseCabinetL.addEventListener('change', () => {
+            if (caseCabinetL.checked) {
+               this.builder.addCaseCabinet()
+            }
+            console.log(this.scene.scene.children)
+        });
+
+        //угловая право
+        angleRight.addEventListener('change', () => {
+            ['AngleLowerLeft', 'AngleUpperLeft', 'DirectUpper', 'DirectLower'].forEach(name => {
+                this.scene.scene.children
+                    .filter(element => element.name === name)
+                    .forEach(element => this.scene.scene.remove(element));
+            });
+            if (angleRight.checked) {
+                this.builder.addLevel1()
+                this.builder.addLevel2()
+                this.builder.addLeftLevel1()
+            }
+        });
+
+        //угловая лево
+        angleLeft.addEventListener('change', () => {
+            ['AngleLowerLeft', 'AngleUpperLeft', 'DirectUpper', 'DirectLower'].forEach(name => {
+                this.scene.scene.children
+                    .filter(element => element.name === name)
+                    .forEach(element => this.scene.scene.remove(element));
+            });
+            if (angleLeft.checked) {
+                this.builder.addLevel1()        
+                this.builder.addLeftLevel1()
+                this.builder.addLeftLevel2()
+            }
+        });
+
+        //угловая все
+        angleAll.addEventListener('change', () => {
+            ['AngleLowerLeft', 'AngleUpperLeft', 'DirectUpper', 'DirectLower'].forEach(name => {
+                this.scene.scene.children
+                    .filter(element => element.name === name)
+                    .forEach(element => this.scene.scene.remove(element));
+            });
+            if (angleAll.checked) {
+                this.builder.addLevel1()
+                this.builder.addLevel2()
+                this.builder.addLeftLevel1()
+                this.builder.addLeftLevel2()
+            }
+        });
+
+        //п образная только нижние
+        doubleBottom.addEventListener('change', () => {
+            ['AngleLowerLeft', 'AngleUpperLeft', 'DirectUpper', 'DirectLower'].forEach(name => {
+                this.scene.scene.children
+                    .filter(element => element.name === name)
+                    .forEach(element => this.scene.scene.remove(element));
+            });
+            if (doubleBottom.checked) {
+                this.builder.addLevel1()             
+                this.builder.addLeftLevel1()
+                this.builder.addRightLevel1()      
+            }
+        });
+
+          //п образная прямо 
+          doubleDirect.addEventListener('change', () => {
+            ['AngleLowerLeft', 'AngleUpperLeft', 'DirectUpper', 'DirectLower'].forEach(name => {
+                this.scene.scene.children
+                    .filter(element => element.name === name)
+                    .forEach(element => this.scene.scene.remove(element));
+            });
+            if (doubleDirect.checked) {
+                this.builder.addLevel1()
+                this.builder.addLevel2()             
+                this.builder.addLeftLevel1()
+                this.builder.addRightLevel1()
+
+               
+            }
+        });
+
+           //п образная прямо + лево
+           doubleDirectLeft.addEventListener('change', () => {
+            ['AngleLowerLeft', 'AngleUpperLeft', 'DirectUpper', 'DirectLower'].forEach(name => {
+                this.scene.scene.children
+                    .filter(element => element.name === name)
+                    .forEach(element => this.scene.scene.remove(element));
+            });
+            if (doubleDirectLeft.checked) {
+                this.builder.addLevel1()
+                this.builder.addLevel2()     
+                this.builder.addLeftLevel1()
+                this.builder.addLeftLevel2()
+                this.builder.addRightLevel1()              
+            }
+        });
+
+           //п образная прямо + лево
+           doubleDirectRight.addEventListener('change', () => {
+            ['AngleLowerLeft', 'AngleUpperLeft', 'DirectUpper', 'DirectLower'].forEach(name => {
+                this.scene.scene.children
+                    .filter(element => element.name === name)
+                    .forEach(element => this.scene.scene.remove(element));
+            });
+            if (doubleDirectRight.checked) {
+                this.builder.addLevel1()
+                this.builder.addLevel2()        
+                this.builder.addLeftLevel1()        
+                this.builder.addRightLevel2()
+                this.builder.addRightLevel1()
+            }
+        });
+
+
+         //п образная прямо + лево
+         doubleDirectRightLeft.addEventListener('change', () => {
+            ['AngleLowerLeft', 'AngleUpperLeft', 'DirectUpper', 'DirectLower'].forEach(name => {
+                this.scene.scene.children
+                    .filter(element => element.name === name)
+                    .forEach(element => this.scene.scene.remove(element));
+            });
+            if (doubleDirectRightLeft.checked) {
+                this.builder.addLevel1()
+                this.builder.addLevel2()
+                this.builder.addLeftLevel1()
+                this.builder.addLeftLevel2()
+                this.builder.addRightLevel2()
+                this.builder.addRightLevel1()
+            }
+        });
+
+        doubleRightLeft.addEventListener('change', () => {
+            ['AngleLowerLeft', 'AngleUpperLeft', 'DirectUpper', 'DirectLower'].forEach(name => {
+                this.scene.scene.children
+                    .filter(element => element.name === name)
+                    .forEach(element => this.scene.scene.remove(element));
+            });
+            if (doubleRightLeft.checked) {
+                this.builder.addLevel1()
+                this.builder.addLeftLevel1()
+                this.builder.addLeftLevel2()   
+                this.builder.addRightLevel2()
+                this.builder.addRightLevel1()
+
+            }
+        });
     }
 
    

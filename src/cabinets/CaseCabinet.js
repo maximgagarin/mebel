@@ -1,8 +1,9 @@
 import * as THREE from 'three'
 
-import { boxMaterial , doorMaterial ,door2 } from '../materials'
+import { boxMaterial , doorMaterial } from '../materials'
+import KitchenConfig from '../KitchenConfig'
 
-export class UpperCabinet extends THREE.Group{
+export class CaseCabinet extends THREE.Group{
    constructor(x,y,z){
            super()
            this.x = x
@@ -16,38 +17,33 @@ export class UpperCabinet extends THREE.Group{
    
    
        addbox(){
-           const doorGeometry = new THREE.BoxGeometry((this.x)-0.007, this.y, 0.016)
+           const doorGeometry = new THREE.BoxGeometry(this.x, this.y, 0.016)
            const backGeometry = new THREE.BoxGeometry(this.x, this.y, 0.008)
            const topGeometry = new THREE.BoxGeometry((this.x)-0.032, this.z, 0.016)
-           const sideGeometry = new THREE.BoxGeometry(this.z, this.y, 0.016) 
+           const sideGeometry = new THREE.BoxGeometry(this.z, this.y, 0.016)
+           const baseGeometry = new THREE.BoxGeometry(this.x, 0.1, 0.016)
+          
+   
+   
+   
            const door = new THREE.Mesh(doorGeometry, doorMaterial)
+   
            const panelback = new THREE.Mesh(backGeometry, boxMaterial)
            const paneltop = new THREE.Mesh(topGeometry, boxMaterial)
            const panelbottom = new THREE.Mesh(topGeometry, boxMaterial)
+   
            const panelleft = new THREE.Mesh(sideGeometry, boxMaterial)
            const panelright = new THREE.Mesh(sideGeometry, boxMaterial)
 
-           door.castShadow = true;
-           door.receiveShadow = true;
-
-           paneltop.castShadow = true;
-           paneltop.receiveShadow = true;
-
-
-           panelbottom.castShadow = true;
-           panelbottom.receiveShadow = true;
-
-
-           panelleft.castShadow = true;
-           panelleft.receiveShadow = true;
-
-
-           panelright.castShadow = true;
-           panelright.receiveShadow = true;
-
+            const basepanel = new THREE.Mesh(baseGeometry, boxMaterial)
    
           
- 
+   
+          
+         
+   
+          
+   
            panelleft.rotation.y = Math.PI/2
            paneltop.rotation.x = Math.PI/2
            panelbottom.rotation.x = -Math.PI/2
@@ -56,18 +52,22 @@ export class UpperCabinet extends THREE.Group{
            panelright.rotation.y = -Math.PI/2
            panelback.rotation.y = Math.PI
           
+   
+   
+   
            panelback.position.set(0,0,-0.004)
            panelleft.position.set((-(this.x)/2)+0.0081, 0, (this.z)/2)
            panelright.position.set(((this.x)/2)-0.0081, 0, (this.z)/2)
            paneltop.position.set(0, ((this.y)/2)-0.008, (this.z)/2)
            panelbottom.position.set(0, (-(this.y)/2)+0.008, (this.z)/2)
+           basepanel.position.set(0,-((this.y)/2)-0.05, (this.z)-0.01)
           
    
    
         
            door.position.set(0, 0, (this.z) +0.01)
    
-           this.add(door, panelback, panelleft, panelright,   paneltop,  panelbottom)
+           this.add(door, panelback, panelleft, panelright,   paneltop, basepanel, panelbottom)
           
            return this
    

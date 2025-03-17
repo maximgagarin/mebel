@@ -1,6 +1,6 @@
 import * as THREE from 'three'
 
-import { boxMaterial } from '../materials'
+import { boxMaterial , tableTopMaterial , doorMaterial } from '../materials'
 
 export class LowerCabinet extends THREE.Group{
     constructor(x,y,z){
@@ -16,15 +16,16 @@ export class LowerCabinet extends THREE.Group{
 
 
     addbox(){
-        const doorGeometry = new THREE.BoxGeometry(this.x, this.y, 0.016)
-        const backGeometry = new THREE.BoxGeometry(this.x, this.y, 0.008)
+        const doorGeometry = new THREE.BoxGeometry((this.x)-0.007, this.y, 0.016)
+        const backGeometry = new THREE.BoxGeometry((this.x), this.y, 0.008)
         const topGeometry = new THREE.BoxGeometry((this.x)-0.032, this.z, 0.016)
         const sideGeometry = new THREE.BoxGeometry(this.z, this.y, 0.016)
         const baseGeometry = new THREE.BoxGeometry(this.x, 0.1, 0.016)
+        const tableTopGeometry = new THREE.BoxGeometry(this.x, 0.03, (this.z)+0.1)
 
 
 
-        const door = new THREE.Mesh(doorGeometry, boxMaterial)
+        const door = new THREE.Mesh(doorGeometry, doorMaterial)
 
         const panelback = new THREE.Mesh(backGeometry, boxMaterial)
        // const paneltop = new THREE.Mesh(topGeometry, boxMaterial)
@@ -35,7 +36,24 @@ export class LowerCabinet extends THREE.Group{
 
         const basepanel = new THREE.Mesh(baseGeometry, boxMaterial)
 
-       
+        const tableTop = new THREE.Mesh(tableTopGeometry, tableTopMaterial)
+
+        door.castShadow = true;
+        door.receiveShadow = true;
+
+   
+
+
+        panelbottom.castShadow = true;
+        panelbottom.receiveShadow = true;
+
+
+        panelleft.castShadow = true;
+        panelleft.receiveShadow = true;
+
+
+        panelright.castShadow = true;
+        panelright.receiveShadow = true;
       
 
        
@@ -57,12 +75,14 @@ export class LowerCabinet extends THREE.Group{
         //paneltop.position.set(0, (0.35)-0.008, 0.15)
         panelbottom.position.set(0, (-(this.y)/2)+0.008, (this.z)/2)
         basepanel.position.set(0,-((this.y)/2)-0.05, (this.z)-0.01)
+        tableTop.position.set(0,((this.y)/2)+0.016, (this.z)/2)
+
 
 
      
         door.position.set(0, 0, (this.z) +0.01)
 
-        this.add(door, panelback, panelleft, panelright,  basepanel ,  panelbottom)
+        this.add(door, panelback, panelleft, panelright,  basepanel ,  panelbottom, tableTop)
        
         return this
 

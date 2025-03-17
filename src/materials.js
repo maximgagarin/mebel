@@ -81,9 +81,9 @@ export const floorMaterial = new THREE.MeshPhysicalMaterial({
         new THREE.MeshStandardMaterial({ color: 0xDFC7AF }), // Красная (передняя сторона)
         new THREE.MeshStandardMaterial({ color: 0xDFC7AF }), // Зелёная (задняя сторона)
         new THREE.MeshStandardMaterial({ color: 0xDFC7AF }), // Синяя (верхняя сторона)
-        new THREE.MeshStandardMaterial({ color: 0x3B312D }), // Жёлтая (нижняя сторона)
+        new THREE.MeshStandardMaterial({ color:  0xDFC7AF }), // Жёлтая (нижняя сторона)
         new THREE.MeshStandardMaterial({ color: 0xDFC7AF }), // лицевая
-        new THREE.MeshStandardMaterial({ color:'grey' }), // задняя (правая сторона)rgb(1, 65, 1)
+        new THREE.MeshStandardMaterial({ color:0xDFC7AF }), // задняя (правая сторона)rgb(1, 65, 1)
     ];
 
     export const tableTopMaterial = [
@@ -94,3 +94,27 @@ export const floorMaterial = new THREE.MeshPhysicalMaterial({
         new THREE.MeshStandardMaterial({ color:0x808080 }), // лицевая
         new THREE.MeshStandardMaterial({ color:0x808080 }), // задняя (правая сторона)rgb(1, 65, 1)
     ];
+
+    export const doorMaterial = [
+      new THREE.MeshStandardMaterial({ color: 0x808080 }), // Красная (передняя сторона)
+      new THREE.MeshStandardMaterial({ color:0x808080 }), // Зелёная (задняя сторона)
+      new THREE.MeshStandardMaterial({ color:0x808080 }), // Синяя (верхняя сторона)
+      new THREE.MeshStandardMaterial({ color:0x808080 }), // Жёлтая (нижняя сторона)
+      new THREE.MeshStandardMaterial({ color:0xDCDCDC }), // лицевая
+      new THREE.MeshStandardMaterial({ color:0x808080 }), // задняя (правая сторона)rgb(1, 65, 1)
+  ];
+
+
+  export const door2 = new THREE.MeshPhysicalMaterial({
+
+    color: 0xDCDCDC,
+   
+    
+    //aoMap: metalAO,
+    // displacementMap: displacementMap,
+     displacementScale: 0.9,
+    metalness: 0.2,  // Металл
+    roughness: 0.2,  // Гладкая поверхность
+   clearcoat: 1.0,  // Покрытие (эффект лака)
+    clearcoatRoughness: 0.9 // Гладкость покрытия
+  });

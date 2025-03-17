@@ -20,6 +20,11 @@ export class TableTop extends THREE.Group{
     addbox(){
         const geometry = new THREE.BoxGeometry(this.x, this.y, this.z)
         const panel = new THREE.Mesh(geometry, tableTopMaterial)
+
+        panel.castShadow = true
+        panel.receiveShadow = true
+
+
         this.add(panel)
        
         return this

@@ -14,7 +14,7 @@ export class SceneManager {
         this.data = '123'
         
         this.camera = new THREE.PerspectiveCamera(40, window.innerWidth / window.innerHeight, 0.1, 1000);
-        this.camera.position.set(1, 3 , 3);
+        this.camera.position.set(1, 4 , 5);
         
         
         this.targetPosition = new THREE.Vector3(0, 0, 0);
@@ -26,7 +26,7 @@ export class SceneManager {
         this.renderer.shadowMap.enabled = true;
         this.renderer.shadowMap.type = THREE.PCFSoftShadowMap; // Мягкие тени
 
-        this.renderer.setClearColor(0xf7f9fc, 1) // фон
+        this.renderer.setClearColor(0xffffff, 1) // фон
         
         this.container = document.getElementById('render');
         this.container.appendChild(this.renderer.domElement);

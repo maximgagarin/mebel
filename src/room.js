@@ -96,7 +96,7 @@ export class Room{
         KitchenConfig.depth = this.depth
         KitchenConfig.width = this.width
         KitchenConfig.height = this.height
-        console.log(KitchenConfig)
+        
     }
 
 }

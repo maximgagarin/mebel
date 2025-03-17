@@ -16,17 +16,17 @@
     <div class="menu">
         <div class="controls_item" >
             <div><span class="span_input">Ширина</span></div>
-            <input id="width" class="input_range" type="range" min="30" max="60" step="1" value="20">
+            <input id="width" class="input_range" type="range" min="3" max="6" step="0.1" value="2">
         </div>   
    
         <div class="controls_item" >
           <div><span class="span_input">Длина</span></div>
-          <input id="depth" class="input_range" type="range" min="20" max="40" step="1" value="20">
+          <input id="depth" class="input_range" type="range" min="2" max="4" step="0.1" value="2">
         </div>
 
         <div class="controls_item" >
             <div><span class="span_input">Высота</span></div>
-            <input id="height" class="input_range" type="range" min="20" max="35" step="1" value="20">
+            <input id="height" class="input_range" type="range" min="2" max="3" step="0.1" value="2">
           </div>
 
         <div class="kitchenType">
@@ -38,6 +38,7 @@
             <label for="javascript">п-образная</label>  
         </div>
 
+        <!-- блок для прямой кухни -->
         <div class="kitchenDirectBlocks">
             <input type="radio" id="allblocks" name="direct_blocks"  checked value="">
             <label for="html">верхние и нижние базы</label><br>
@@ -45,25 +46,55 @@
             <label for="css">нижние базы</label><br>
         </div>
 
+        <!-- блок для угловой кухни -->
         <div class="kitchenAngleBlocks">
-            <input type="radio" id="bottomblocks" name="angle_blocks"   value="">
+            <input type="radio" id="angleBottom" name="angle_blocks"   value="">
             <label for="html"> нижние базы</label><br>
 
-            <input type="radio" id="right" name="angle_blocks" value="">
+            <input type="radio" id="angleRight" name="angle_blocks" value="">
             <label for="css">нижние верх право</label><br>
 
-            <input type="radio" id="left" name="angle_blocks"   value="">
+            <input type="radio" id="angleLeft" name="angle_blocks"   value="">
             <label for="html">нижние верх лево</label><br>
 
-            <input type="radio" id="all" name="angle_blocks" value="">
+            <input type="radio" id="angleAll" name="angle_blocks" value="">
             <label for="css">все базы</label><br>
         </div>
 
+
+        <!-- блок для п образной угловой кухни -->
+        <div class="kitchenDoubleBlocks">
+            <input type="radio" id="doubleBottom" name="double"   value="">
+            <label for="html"> нижние базы</label><br>
+
+            <input type="radio" id="doubleDirect" name="double" value="">
+            <label for="css"> верх прямо</label><br>
+
+            <input type="radio" id="doubleDirectLeft" name="double"   value="">
+            <label for="html">  прямо + лево</label><br>
+
+            <input type="radio" id="doubleDirectRight" name="double" value="">
+            <label for="css">  прямо + право</label><br>
+            <input type="radio" id="doubleDirectRightLeft" name="double" value="">
+            <label for="css">прямо + лево + право</label><br>
+            <input type="radio" id="doubleRightLeft" name="double" value="">
+            <label for="css">лево + право</label><br>
+           
+        </div>
+
+        <!-- пенал -->
         <div class="form-check form-switch mt-5">
             <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault">
             <label class="form-check-label" for="flexSwitchCheckDefault">Добавить пенал</label>
           </div>
         
+          <input type="radio" id="caseCabinetR" name="caseCabinet" value="">
+          <label for="css">пенал справа</label><br>
+
+          <input type="radio" id="caseCabinetL" name="caseCabinet" value="">
+          <label for="css">пенал слева</label><br>
+      
+         
 
 
 
